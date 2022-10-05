@@ -12,6 +12,6 @@ processos
 threads
 
 # pastas
-resultado_procesos/
+resultado_processos/
 resultado_threads/
 ref/
