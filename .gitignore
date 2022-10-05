@@ -1,0 +1,17 @@
+# Arquivo de texto
+M1.txt
+M2.txt
+MR_sequencial.txt
+.vscode
+**/*.txt
+
+# Arquivos compilados
+criador_matriz
+sequencial
+processos
+threads
+
+# pastas
+resultado_procesos/
+resultado_threads/
+ref/
