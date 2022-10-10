@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #define int long long
 
-#define PASTA "results_parallel_processes/"
+#define PASTA "resultado_processos/"
 struct Dimension {
     int rows, cols;
     Dimension(int r = 0, int c = 0) : rows{r}, cols{c} {}

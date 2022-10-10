@@ -45,7 +45,7 @@ void receberMatriz(std::ifstream& file, std::vector<std::vector<int>>& matriz, D
 
         // Envia a linha para a matriz que é passada como parâmetro
         matriz.push_back(std::vector<int>());
-        for(int i = 0; i < dimension.cols; ++i) {
+        for(int i = 0; i < dimensao.cols; ++i) {
             matriz[rowAtual].push_back(std::atoi(numbers[i].c_str()));
         }
         rowAtual++;
@@ -53,7 +53,7 @@ void receberMatriz(std::ifstream& file, std::vector<std::vector<int>>& matriz, D
     dimensao.rows = rowAtual;
 }
 
-void multiplicarMatrizes(const std::vector<std::vector<int>>& matriz1, Dimension dMatriz1, const std::vector<std::vector<int>>& matriz2, Dimension dMatriz2, int p) {
+void multiplicarMatrizes(const std::vector<std::vector<int>>& matriz1, Dimensoes dMatriz1, const std::vector<std::vector<int>>& matriz2, Dimensoes dMatriz2, int p) {
     std::vector<pid_t> pid;
     std::ofstream arquivo;
     std::chrono::steady_clock::time_point begin;
@@ -67,7 +67,7 @@ void multiplicarMatrizes(const std::vector<std::vector<int>>& matriz1, Dimension
             if(elementosCalculados % p == 0 || (i == dMatriz1.rows -1 && j == dMatriz2.cols-1)){
                 
                 // Cria os processos filhos e inicia a contagem
-                if((pid.empty() || pid.back() > 0) && !(i == dMatriz1.rows -1 && j == dMatriz.cols-1)){
+                if((pid.empty() || pid.back() > 0) && !(i == dMatriz1.rows -1 && j == dMatriz2.cols-1)){
                     begin = std::chrono::steady_clock::now();
                     pid_t tmp = fork();
                     pid.push_back(tmp);
@@ -122,5 +122,5 @@ int32_t main (int32_t argc, char** argv) {
     int p = atoi(argv[3]);
     int p_atual=0;
 
-    multiplicarMatrizes(matrix1, dimensionsMatrix1,matrix2, dimensionsMatrix2, p);
+    multiplicarMatrizes(matriz1, dMatriz1,matriz2, dMatriz2, p);
 }
