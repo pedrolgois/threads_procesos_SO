@@ -40,7 +40,7 @@ void receberMatriz(std::ifstream& file, std::vector<std::vector<int>>& matriz, D
 
         // Envia a linha para a matriz que é passada como parâmetro
         matriz.push_back(std::vector<int>());
-        for(int i = 0; i < dimension.cols; ++i) {
+        for(int i = 0; i < dimensao.cols; ++i) {
             matriz[rowAtual].push_back(std::atoi(numbers[i].c_str()));
         }
         rowAtual++;
@@ -48,7 +48,7 @@ void receberMatriz(std::ifstream& file, std::vector<std::vector<int>>& matriz, D
     dimensao.rows = rowAtual;
 }
 
-void saveResult(std::vector<std::vector<int>>& matrixResult, int initialRow, int initialCol, int P, Dimension& dimensionsResult, int64_t& timeResult, std::ofstream& result) {
+void saveResult(std::vector<std::vector<int>>& matrixResult, int initialRow, int initialCol, int P, Dimensoes& dimensionsResult, int64_t& timeResult, std::ofstream& result) {
     result << dimensionsResult.rows << " " << dimensionsResult.cols << std::endl;
     int count = 0;
     for(int i = initialRow; i < dimensionsResult.rows; ++i) {
@@ -108,11 +108,11 @@ void multiplicarMatrizes(
     std::ofstream file("resultado_threads/result_threads_" + std::to_string(currentIndex+1) + ".txt");
     Dimensoes dimensionsResult(dMatriz1.rows, dMatriz2.cols);
     initialCol = currentIndex == 0 ? 0 : indexes[currentIndex-1].second;
-    saveResult(result, initialRow, initialCol, P, dimensionsResult, timeResult, file);
+    saveResult(matrizR, initialRow, initialCol, P, dimensionsResult, timeResult, file);
 }
 
 // Função que define cada index com a coluna e row atual
-std::vector<std::pair<int, int>> definirIndex(int factor, int P, Dimension& dimensionsResult) {
+std::vector<std::pair<int, int>> definirIndex(int factor, int P, Dimensoes& dimensionsResult) {
     std::vector<std::pair<int, int>> index;
     int rowAtual = 0,colAtual = 0;
     for(int i = 0; i < factor; ++i) {
@@ -168,12 +168,12 @@ int32_t main (int32_t argc, char** argv) {
         // Inicia o contador
         std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
         threads.emplace_back(
-            multiplyMatrixes, std::ref(matriz1), std::ref(dMatriz1), std::ref(matriz2),
+            multiplicarMatrizes, std::ref(matriz1), std::ref(dMatriz1), std::ref(matriz2),
             std::ref(dMatriz2), std::ref(matrizR), std::ref(index), i, P, begin
         );
     }
 
-    for (int j = 0; j < factor; j++) {
+    for (int j = 0; j < numeroDeArquivos; j++) {
         threads[j].join();
     }
 }
